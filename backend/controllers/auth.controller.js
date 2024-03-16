@@ -8,7 +8,7 @@ export const login = async(req, res) => {
       const {username,password} = req.body
 
       const user = await User.findOne({username})
-  console.log(user);
+
       const isPasswordCorrect = await bcrypt.compare(password,user?.password || "")
 
       if(!isPasswordCorrect || !user){
@@ -29,6 +29,8 @@ export const login = async(req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+
 export const logout = (req, res) => {
   try {
     res.cookie("jwt","",{maxAge:0})
@@ -39,6 +41,8 @@ export const logout = (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
 export const signup = async (req, res) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;
